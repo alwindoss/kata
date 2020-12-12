@@ -10,12 +10,14 @@ CAT_BINARY_NAME=cat
 UNIQ_BINARY_NAME=uniq
 PROJECT_HOME=$(shell pwd)
 
-all: test build
+all: test test-race build
 build: 
 	$(GOBUILD) -o ./$(BINARY_LOC)/$(CAT_BINARY_NAME) -v ./cmd/$(CAT_BINARY_NAME)/...
 	$(GOBUILD) -o ./$(BINARY_LOC)/$(UNIQ_BINARY_NAME) -v ./cmd/$(UNIQ_BINARY_NAME)/...
 test: 
 	$(GOTEST) -v ./...
+test-race:
+	$(GOTEST) -race -v ./...
 clean: 
 	$(GOCLEAN)
 	rm -rf $(BINARY_LOC)
